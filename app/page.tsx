@@ -17,17 +17,30 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 const askCurrentPriceSchema = z.object({
-    oldPrice: z.number().positive(),
+    oldPrice: z.string(),
     oldDate: z.string(),
 })
 
+type askCurrentPrice = z.infer<typeof askCurrentPriceSchema>
+
 export default function Home() {
-    const form = useForm()
+  const form = useForm<askCurrentPrice>(
+    {
+      defaultValues: {
+        oldPrice: "",
+        oldDate: ""
+      }
+    }
+  )
 
   const onSubmit = () => {
-    console.log("Calculando precio actual...")
+    console.log("Calculando precio actual...");
+    console.log(form.getValues())
   }
 
+
+  
+  
   return (
     <div>
       <h1>Cuanto era</h1>

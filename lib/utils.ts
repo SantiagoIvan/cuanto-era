@@ -28,3 +28,4 @@ export function parseDateToString(dateString: string) {
 export function parseDolarString (value: string): number {
   return parseFloat(value.replace(",", "."))
 }
+

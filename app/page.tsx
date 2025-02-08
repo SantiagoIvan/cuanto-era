@@ -1,6 +1,6 @@
 'use client'
 
-
+import { getCurrentPrice } from "@/app/services/askCurrentPrice/actions";
 import {Input} from "@/components/ui/input";
 import { Button } from "@/components/ui/button"
 import {
@@ -14,18 +14,16 @@ import {
 } from "@/components/ui/form"
 import {useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+import {AskCurrentPrice, askCurrentPriceSchema} from "@/lib/utils";
 
-const askCurrentPriceSchema = z.object({
-    oldPrice: z.string(),
-    oldDate: z.string(),
-})
 
-type askCurrentPrice = z.infer<typeof askCurrentPriceSchema>
 
 export default function Home() {
-  const form = useForm<askCurrentPrice>(
+
+  const form = useForm<AskCurrentPrice>(
     {
+        mode: 'onBlur',
+        resolver: zodResolver(askCurrentPriceSchema),
       defaultValues: {
         oldPrice: "",
         oldDate: ""
@@ -33,9 +31,14 @@ export default function Home() {
     }
   )
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     console.log("Calculando precio actual...");
-    console.log(form.getValues())
+    const formValues = form.getValues();
+    console.log(formValues);
+    const result = await getCurrentPrice(formValues);
+    console.log(result);
+    //
+
   }
 
 

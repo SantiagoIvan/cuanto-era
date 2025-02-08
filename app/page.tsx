@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { getCurrentPrice } from "@/app/services/askCurrentPrice/actions";
+import { getCurrentDollarExchangeRate } from "@/app/services/actions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AskCurrentPrice, askCurrentPriceSchema } from "@/lib/utils";
+import { AskCurrentPrice, askCurrentPriceSchema } from "./models/currency.model";
 
 export default function Home() {
   const [currentPrice, setCurrentPrice] = useState("");
@@ -37,11 +37,8 @@ export default function Home() {
   });
 
   const onSubmit = async () => {
-    console.log("Calculando precio actual...");
     const formValues = form.getValues();
-    console.log(formValues);
-    const result = await getCurrentPrice(formValues);
-    console.log(result);
+    const result = await getCurrentDollarExchangeRate(formValues);
     setCurrentPrice(result);
   };
 

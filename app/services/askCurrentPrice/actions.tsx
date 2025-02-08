@@ -1,5 +1,5 @@
 'use server'
-import {AskCurrentPrice, parseDateToString} from "@/lib/utils";
+import {AskCurrentPrice, parseDateToString, parseDolarString} from "@/lib/utils";
 import {addDays, INTERVALO_DE_DIAS} from "@/lib/utils";
 import moment from 'moment';
 
@@ -15,9 +15,18 @@ export async function getCurrentPrice (values: AskCurrentPrice): Promise<number>
     
 
     const result = await fetch(`https://mercados.ambito.com//dolar/informal/historico-general/${fromString}/${toString}`);
-    console.log(`https://mercados.ambito.com//dolar/informal/historico-general/${fromString}/${toString}`);
+
     const data = await result.json();
-    const dataSlice = data.slice(1).map((element: string[]) => (parseFloat(element[1]) + parseFloat(element[2]) / 2 ) );
-    console.log(dataSlice)
-    return 4;
+    const promediosDiarios = data.slice(1).map((element: string[]) => ((parseDolarString(element[1]) + parseDolarString(element[2])) / 2));
+    console.log(promediosDiarios);
+
+    const valorPrommedioDolar = promediosDiarios.reduce((partialSum: number, a: number) => partialSum + a, 0) / promediosDiarios.length;
+
+    /*
+    precio viejo / dolar = cuantos doalres costo esa verga
+    obtener dolar actual
+    dolares de esa verga * precio dolar actual
+     */
+
+    return valorPrommedioDolar;
 }

@@ -24,3 +24,7 @@ export function addDays(date, days) {
 export function parseDateToString(dateString: string) {
   return dateString.split("-").reverse().join("-");
 }
+
+export function parseDolarString (value: string): number {
+  return parseFloat(value.replace(",", "."))
+}

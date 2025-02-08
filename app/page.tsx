@@ -40,7 +40,7 @@ export default function Home() {
     console.log(formValues);
     const result = await getCurrentPrice(formValues);
     console.log(result);
-    //
+    setCurrentPrice(result)
 
   }
 

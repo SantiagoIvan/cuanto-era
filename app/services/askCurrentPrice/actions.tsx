@@ -1,17 +1,17 @@
 'use server'
-import { AskCurrentPrice } from "@/lib/utils";
+import {AskCurrentPrice, parseDateToString} from "@/lib/utils";
+import {addDays, INTERVALO_DE_DIAS} from "@/lib/utils";
 
 
 export async function getCurrentPrice (values: AskCurrentPrice): Promise<number> {
-    const result = await fetch(`https://mercados.ambito.com//dolar/informal/historico-general/03-03-2021/03-03-2021`);
-    const dateOne = new Date(`03-03-2021`);
-    console.log(dateOne)
-    dateOne.setDate(dateOne.getDate() + 5);
-    console.log(dateOne)
-    //15-05-1995
-    //10-05-1995
-    //05-05-1995
+
+    const baseDate = new Date(parseDateToString(values.oldDate))
+    const to = addDays(baseDate, INTERVALO_DE_DIAS)
+    const from = addDays(baseDate, -INTERVALO_DE_DIAS)
+
+
+
+    const result = await fetch(`https://mercados.ambito.com//dolar/informal/historico-general/${}/${}`);
     console.log("Calculando precio actual...");
-    console.log(values);
     return 4;
 }

@@ -1,5 +1,5 @@
 'use client'
-
+import { useState } from "react";
 import { getCurrentPrice } from "@/app/services/askCurrentPrice/actions";
 import {Input} from "@/components/ui/input";
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,9 @@ import {AskCurrentPrice, askCurrentPriceSchema} from "@/lib/utils";
 
 
 export default function Home() {
+
+  const [currentPrice, setCurrentPrice] = useState('');
+
 
   const form = useForm<AskCurrentPrice>(
     {
@@ -41,8 +44,7 @@ export default function Home() {
 
   }
 
-
-  
+    
   
   return (
     <div>
@@ -84,6 +86,10 @@ export default function Home() {
       </Form>
         <form>
         </form>
+        <h1>resultados:</h1>
+        <div>
+          <span>El valor es de: {currentPrice} </span>
+        </div>
     </div>
   );
 }

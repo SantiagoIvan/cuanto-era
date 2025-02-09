@@ -8,8 +8,28 @@ export const DateService = {
      */
     DAYS_RANGE: 5,
 
+    /**
+     * Fecha mínima para obtener el promedio del dólar informal.
+     * @type {string}
+     */
+    MIN_DATE: "01-01-2003",
+
+  /**
+   * Valida si una fecha es válida y posterior a la fecha mínima.
+   * @param {string} date - Fecha en formato DD-MM-YYYY.
+   * @returns {boolean} true si la fecha es válida y posterior a la fecha mínima, false en caso contrario.
+   */
+  validateDate: (date: string): boolean => {
+    const dateMoment = moment(date, 'DD-MM-YYYY');
+    const minDate = moment(DateService.MIN_DATE, 'DD-MM-YYYY');
+    return dateMoment.isValid() && dateMoment.isSameOrAfter(minDate);
+  },
+
+
+
   /**
    * Obtiene la fecha actual en formato DD-MM-YYYY.
+
    * @returns {string} Fecha actual en formato DD-MM-YYYY.
    */
   getCurrentDate: (): string => moment().format('DD-MM-YYYY'),
